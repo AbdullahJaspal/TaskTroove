@@ -2,7 +2,7 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 # Getting Started
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+> **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
 ## Step 1: Start the Metro Server
 
@@ -77,3 +77,11 @@ To learn more about React Native, take a look at the following resources:
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+
+=======
+
+# TaskTroove
+
+TaskTroove is your ultimate companion for organizing and managing your daily life. With TaskTroove, you can easily add and keep track of important notes and tasks that are a part of your daily routine. Whether it's a reminder for an upcoming appointment, a to-do list for household chores, or simply jotting down your thoughts, TaskTroove helps you stay organized and on top of things. Say goodbye to forgetting important details and hello to a more productive and efficient daily life. Download TaskTroove now and start simplifying your day!
+
+> > > > > > > a92d45ae6de2ed0e0075385a68622b423c84377e
