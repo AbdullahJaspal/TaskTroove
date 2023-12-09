@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {theme} from '../../theme/theme';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import {Icon} from '@rneui/themed';
 
 function OnBoard() {
   const slides = [
@@ -48,8 +49,15 @@ function OnBoard() {
             width: '90%',
             backgroundColor: theme.colors.neutral.white,
             height: 50,
+            alignItems: 'center',
+            paddingHorizontal: 20,
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            borderRadius: 50,
           }}>
+          <Text />
           <Text>Let's get started</Text>
+          <Icon name="arrowright" type="ant-design" />
         </TouchableOpacity>
       </View>
     );
