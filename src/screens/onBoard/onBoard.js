@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {theme} from '../../theme/theme';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
@@ -8,32 +8,49 @@ function OnBoard() {
     {
       key: 'one',
       title: 'Title 1',
-      text: 'Description.\nSay something cool',
-      image: require('./assets/1.jpg'),
+      text: 'Note Down anything you want to achieve, today or in the future.',
+      image: require('../../assets/images/onBoard1.png'),
       backgroundColor: '#59b2ab',
     },
     {
       key: 'two',
       title: 'Title 2',
-      text: 'Other cool stuff',
-      image: require('./assets/2.jpg'),
+      text: 'Different goals, different way to note it down.',
+      image: require('../../assets/images/onBoard2.png'),
       backgroundColor: '#febe29',
     },
     {
       key: 'three',
       title: 'Rocket guy',
-      text: "I'm already out of descriptions\n\nLorem ipsum bla bla bla",
-      image: require('./assets/3.jpg'),
+      text: 'Text area, checklist, or some combination. Adapt with your needs',
+      image: require('../../assets/images/onBoard3.png'),
       backgroundColor: '#22bcb5',
     },
   ];
 
   const _renderItem = ({item}) => {
     return (
-      <View style={styles.slide}>
-        <Text style={styles.title}>{item.title}</Text>
+      <View
+        style={{flex: 1, justifyContent: 'space-evenly', alignItems: 'center'}}>
         <Image source={item.image} />
-        <Text style={styles.text}>{item.text}</Text>
+        <Text
+          style={{
+            fontSize: 15,
+            fontFamily: theme.fontFamily.medium,
+            color: theme.colors.neutral.white,
+            width: '90%',
+            alignSelf: 'center',
+          }}>
+          {item.text}
+        </Text>
+        <TouchableOpacity
+          style={{
+            width: '90%',
+            backgroundColor: theme.colors.neutral.white,
+            height: 50,
+          }}>
+          <Text>Let's get started</Text>
+        </TouchableOpacity>
       </View>
     );
   };
