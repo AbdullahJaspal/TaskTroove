@@ -4,20 +4,14 @@ import {theme} from '../../theme/theme';
 import {Icon} from '@rneui/base';
 import InputField from '../../components/InputField';
 import Button from '../../components/Button';
+import Topbar from '../../components/Topbar';
 
 const Register = () => {
   const [showPass, setShowPass] = useState(false);
   const [showRePass, setShowRePass] = useState(false);
   return (
     <View style={styles.mainCont}>
-      <View style={styles.topCont}>
-        <Icon
-          name="chevron-left"
-          type="feather"
-          color={theme.colors.primary.base}
-        />
-        <Text style={styles.topText}>Back to Login</Text>
-      </View>
+      <Topbar title={'Back to Login'} />
       <Text style={styles.register}>Register</Text>
       <Text style={styles.takeNotes}>And start taking notes</Text>
       <InputField
