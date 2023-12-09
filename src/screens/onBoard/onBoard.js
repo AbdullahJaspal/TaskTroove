@@ -1,27 +1,28 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {theme} from '../../theme/theme';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Icon} from '@rneui/themed';
 
 function OnBoard() {
+  const slider = useRef();
   const slides = [
     {
-      key: 'one',
+      key: 1,
       title: 'Title 1',
       text: 'Note Down anything you want to achieve, today or in the future.',
       image: require('../../assets/images/onBoard1.png'),
       backgroundColor: '#59b2ab',
     },
     {
-      key: 'two',
+      key: 2,
       title: 'Title 2',
       text: 'Different goals, different way to note it down.',
       image: require('../../assets/images/onBoard2.png'),
       backgroundColor: '#febe29',
     },
     {
-      key: 'three',
+      key: 3,
       title: 'Rocket guy',
       text: 'Text area, checklist, or some combination. Adapt with your needs',
       image: require('../../assets/images/onBoard3.png'),
@@ -54,6 +55,9 @@ function OnBoard() {
             justifyContent: 'space-between',
             flexDirection: 'row',
             borderRadius: 50,
+          }}
+          onPress={() => {
+            slider.current.goToSlide(item.key);
           }}>
           <Text />
           <Text>Let's get started</Text>
@@ -65,12 +69,18 @@ function OnBoard() {
   const _onDone = () => {
     // User finished the introduction. Show real app through
     // navigation or simply by controlling state
-    this.setState({showRealApp: true});
   };
 
   return (
     <View style={{flex: 1, backgroundColor: theme.colors.primary.base}}>
-      <AppIntroSlider renderItem={_renderItem} data={slides} onDone={_onDone} />
+      <AppIntroSlider
+        ref={slider}
+        renderItem={_renderItem}
+        data={slides}
+        onDone={_onDone}
+        showNextButton={false}
+        showDoneButton={false}
+      />
     </View>
   );
 }
