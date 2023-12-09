@@ -3,30 +3,28 @@ import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {theme} from '../../theme/theme';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Icon} from '@rneui/themed';
+import Button from '../../components/Button';
 
 function OnBoard() {
   const slider = useRef();
   const slides = [
     {
       key: 1,
-      title: 'Title 1',
+      title: `Let's get started`,
       text: 'Note Down anything you want to achieve, today or in the future.',
       image: require('../../assets/images/onBoard1.png'),
-      backgroundColor: '#59b2ab',
     },
     {
       key: 2,
-      title: 'Title 2',
+      title: `Next`,
       text: 'Different goals, different way to note it down.',
       image: require('../../assets/images/onBoard2.png'),
-      backgroundColor: '#febe29',
     },
     {
       key: 3,
-      title: 'Rocket guy',
+      title: 'Proceed to Login',
       text: 'Text area, checklist, or some combination. Adapt with your needs',
       image: require('../../assets/images/onBoard3.png'),
-      backgroundColor: '#22bcb5',
     },
   ];
 
@@ -45,24 +43,12 @@ function OnBoard() {
           }}>
           {item.text}
         </Text>
-        <TouchableOpacity
-          style={{
-            width: '90%',
-            backgroundColor: theme.colors.neutral.white,
-            height: 50,
-            alignItems: 'center',
-            paddingHorizontal: 20,
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-            borderRadius: 50,
-          }}
+        <Button
+          title={item.title}
           onPress={() => {
             slider.current.goToSlide(item.key);
-          }}>
-          <Text />
-          <Text>Let's get started</Text>
-          <Icon name="arrowright" type="ant-design" />
-        </TouchableOpacity>
+          }}
+        />
       </View>
     );
   };
