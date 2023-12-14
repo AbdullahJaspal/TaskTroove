@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {theme} from '../../../theme/theme';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Icon} from '@rneui/themed';
@@ -30,19 +30,9 @@ function OnBoard() {
 
   const _renderItem = ({item}) => {
     return (
-      <View
-        style={{flex: 1, justifyContent: 'space-evenly', alignItems: 'center'}}>
+      <View style={styles.renderCont}>
         <Image source={item.image} />
-        <Text
-          style={{
-            fontSize: 15,
-            fontFamily: theme.fontFamily.medium,
-            color: theme.colors.neutral.white,
-            width: '90%',
-            alignSelf: 'center',
-          }}>
-          {item.text}
-        </Text>
+        <Text style={styles.title}>{item.text}</Text>
         <Button
           title={item.title}
           onPress={() => {
@@ -71,4 +61,14 @@ function OnBoard() {
   );
 }
 
+const styles = StyleSheet.create({
+  renderCont: {flex: 1, justifyContent: 'space-evenly', alignItems: 'center'},
+  title: {
+    fontSize: 15,
+    fontFamily: theme.fontFamily.medium,
+    color: theme.colors.neutral.white,
+    width: '90%',
+    alignSelf: 'center',
+  },
+});
 export default OnBoard;
