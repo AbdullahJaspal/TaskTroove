@@ -11,9 +11,11 @@ function InputField({
   showPass,
   onPress,
   pass,
+  width = '95%',
+  style,
 }) {
   return (
-    <View style={{width: '95%', alignSelf: 'center'}}>
+    <View style={{width: width, alignSelf: 'center', ...style}}>
       <Text
         style={{
           fontFamily: theme.fontFamily.regular,
@@ -34,7 +36,7 @@ function InputField({
           marginTop: 5,
           paddingHorizontal: 10,
         }}
-        secureTextEntry={!showPass}
+        secureTextEntry={showPass}
         placeholder={placeholder}
       />
       {pass && (

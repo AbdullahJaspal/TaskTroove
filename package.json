@@ -10,8 +10,10 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/clipboard": "^1.5.1",
     "@rneui/base": "^4.0.0-rc.8",
     "@rneui/themed": "^4.0.0-rc.8",
+    "@twotalltotems/react-native-otp-input": "^1.3.11",
     "react": "18.2.0",
     "react-native": "0.73.0",
     "react-native-app-intro-slider": "^4.0.4",
