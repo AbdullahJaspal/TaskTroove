@@ -7,11 +7,12 @@ import OtpScreen from './src/screens/auth/otpScreen/otpScreen';
 import ForgetPassword from './src/screens/auth/forgetPassword/forgetPassword';
 import NewPassword from './src/screens/auth/newPassword/newPassword';
 import Home from './src/screens/home/home';
+import Login from './src/screens/auth/login/login';
 
 function App() {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Home />
+      <Login />
     </SafeAreaView>
   );
 }
