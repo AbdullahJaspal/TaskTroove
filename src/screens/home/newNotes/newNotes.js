@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Topbar from '../../../components/Topbar';
 import {theme} from '../../../theme/theme';
 
@@ -48,7 +48,7 @@ const NewNotes = () => {
         <Text style={styles.title}>What Do You Want to Notes?</Text>
         {data.map(item => {
           return (
-            <View style={styles.tab(item.color)}>
+            <TouchableOpacity style={styles.tab(item.color)}>
               <View style={styles.iconWrap(item.iconColor)}>
                 <Image
                   source={require('../../../assets/icons/idea.png')}
@@ -61,7 +61,7 @@ const NewNotes = () => {
                   Use free text area, feel free to write it all
                 </Text>
               </View>
-            </View>
+            </TouchableOpacity>
           );
         })}
       </View>
