@@ -43,26 +43,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: theme.colors.neutral.darkGrey,
   },
-  borderStyleBase: {
-    width: width / 5,
-    height: width / 5,
-  },
-
-  borderStyleHighLighted: {
-    borderColor: theme.colors.success.base,
-  },
-
-  underlineStyleBase: {
-    width: width / 5,
-    height: width / 5,
-    borderWidth: 0,
-    borderWidth: 1,
-    marginVertical: 20,
-    borderRadius: 5,
-  },
-
-  underlineStyleHighLighted: {
-    borderColor: '#03DAC6',
-  },
 });
 export default ForgetPassword;

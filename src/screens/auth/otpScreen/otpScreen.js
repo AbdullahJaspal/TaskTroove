@@ -9,18 +9,11 @@ const {width, height} = Dimensions.get('screen');
 const OtpScreen = () => {
   const [code, setCode] = useState('');
   return (
-    <View style={{flex: 1, justifyContent: 'space-between'}}>
-      <Topbar title={'Back to register'} />
-      <View style={{width: '95%', alignSelf: 'center'}}>
-        <Text style={{fontFamily: theme.fontFamily.bold, fontSize: 35}}>
-          Input Code
-        </Text>
-        <Text
-          style={{
-            fontFamily: theme.fontFamily.regular,
-            fontSize: 14,
-            color: theme.colors.neutral.darkGrey,
-          }}>
+    <View style={styles.mainView}>
+      <Topbar title={'Back to Register'} />
+      <View style={styles.bottomView}>
+        <Text style={styles.title}>Input Code</Text>
+        <Text style={styles.des}>
           Enter input the code you receive on your email
         </Text>
         <OTPInputView
@@ -63,6 +56,14 @@ const OtpScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  mainView: {flex: 1, justifyContent: 'space-between'},
+  bottomView: {width: '95%', alignSelf: 'center'},
+  title: {fontFamily: theme.fontFamily.bold, fontSize: 35},
+  des: {
+    fontFamily: theme.fontFamily.regular,
+    fontSize: 14,
+    color: theme.colors.neutral.darkGrey,
+  },
   borderStyleBase: {
     width: width / 5,
     height: width / 5,
