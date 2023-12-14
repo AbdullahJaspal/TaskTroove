@@ -6,14 +6,14 @@ import Button from '../../components/Button';
 import InputField from '../../components/InputField';
 
 const {width, height} = Dimensions.get('screen');
-const ForgetPassword = () => {
+const NewPassword = () => {
   const [code, setCode] = useState('');
   return (
     <View style={{flex: 1, justifyContent: 'space-between'}}>
       <Topbar title={'Back to Login'} />
       <View style={{width: '95%', alignSelf: 'center'}}>
         <Text style={{fontFamily: theme.fontFamily.bold, fontSize: 35}}>
-          Forget Password
+          Create a new Password
         </Text>
         <Text
           style={{
@@ -21,15 +21,26 @@ const ForgetPassword = () => {
             fontSize: 14,
             color: theme.colors.neutral.darkGrey,
           }}>
-          Insert your email address to receive a code for creating a new
-          password
+          Your new password should be different from the previous password
         </Text>
         <InputField
-          title={'Email Address'}
+          title={'New Password'}
           width="100%"
           style={{
-            marginVertical: 20,
+            marginVertical: 10,
           }}
+          showPass
+          pass
+        />
+        <InputField
+          title={'Retype Password'}
+          width="100%"
+          style={{
+            marginVertical: 10,
+            marginBottom: 30,
+          }}
+          showPass
+          pass
         />
         <Button
           buttonStyle={{width: '100%', marginVertical: 10}}
@@ -64,4 +75,4 @@ const styles = StyleSheet.create({
     borderColor: '#03DAC6',
   },
 });
-export default ForgetPassword;
+export default NewPassword;
