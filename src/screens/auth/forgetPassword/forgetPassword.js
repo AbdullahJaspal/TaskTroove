@@ -9,18 +9,11 @@ const {width, height} = Dimensions.get('screen');
 const ForgetPassword = () => {
   const [code, setCode] = useState('');
   return (
-    <View style={{flex: 1, justifyContent: 'space-between'}}>
+    <View style={styles.mainView}>
       <Topbar title={'Back to Login'} />
-      <View style={{width: '95%', alignSelf: 'center'}}>
-        <Text style={{fontFamily: theme.fontFamily.bold, fontSize: 35}}>
-          Forget Password
-        </Text>
-        <Text
-          style={{
-            fontFamily: theme.fontFamily.regular,
-            fontSize: 14,
-            color: theme.colors.neutral.darkGrey,
-          }}>
+      <View style={styles.bottomView}>
+        <Text style={styles.title}>Forget Password</Text>
+        <Text style={styles.des}>
           Insert your email address to receive a code for creating a new
           password
         </Text>
@@ -42,6 +35,14 @@ const ForgetPassword = () => {
 };
 
 const styles = StyleSheet.create({
+  mainView: {flex: 1, justifyContent: 'space-between'},
+  bottomView: {width: '95%', alignSelf: 'center'},
+  title: {fontFamily: theme.fontFamily.bold, fontSize: 35},
+  des: {
+    fontFamily: theme.fontFamily.regular,
+    fontSize: 14,
+    color: theme.colors.neutral.darkGrey,
+  },
   borderStyleBase: {
     width: width / 5,
     height: width / 5,
