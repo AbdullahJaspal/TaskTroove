@@ -9,18 +9,11 @@ const {width, height} = Dimensions.get('screen');
 const NewPassword = () => {
   const [code, setCode] = useState('');
   return (
-    <View style={{flex: 1, justifyContent: 'space-between'}}>
+    <View style={styles.mainView}>
       <Topbar title={'Back to Login'} />
-      <View style={{width: '95%', alignSelf: 'center'}}>
-        <Text style={{fontFamily: theme.fontFamily.bold, fontSize: 35}}>
-          Create a new Password
-        </Text>
-        <Text
-          style={{
-            fontFamily: theme.fontFamily.regular,
-            fontSize: 14,
-            color: theme.colors.neutral.darkGrey,
-          }}>
+      <View style={styles.bottomView}>
+        <Text style={styles.title}>Create a new Password</Text>
+        <Text style={styles.des}>
           Your new password should be different from the previous password
         </Text>
         <InputField
@@ -53,6 +46,14 @@ const NewPassword = () => {
 };
 
 const styles = StyleSheet.create({
+  mainView: {flex: 1, justifyContent: 'space-between'},
+  bottomView: {width: '95%', alignSelf: 'center'},
+  title: {fontFamily: theme.fontFamily.bold, fontSize: 35},
+  des: {
+    fontFamily: theme.fontFamily.regular,
+    fontSize: 14,
+    color: theme.colors.neutral.darkGrey,
+  },
   borderStyleBase: {
     width: width / 5,
     height: width / 5,
