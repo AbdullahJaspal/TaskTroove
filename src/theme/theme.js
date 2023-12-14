@@ -7,9 +7,9 @@ export const theme = {
       bg: '#FAF8FC',
     },
     scondary: {
-      base: '#60D889',
-      dark: '#1F7F40',
-      light: '#DAF6E4',
+      base: '#DEDC52',
+      dark: '#565510',
+      light: '#F7F6D4',
     },
     neutral: {
       black: '#180E25',
