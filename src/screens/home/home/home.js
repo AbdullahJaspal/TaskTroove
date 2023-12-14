@@ -1,13 +1,13 @@
 import React from 'react';
 import {Image, Text, View} from 'react-native';
-import {theme} from '../../theme/theme';
+import {theme} from '../../../theme/theme';
 
 const Home = () => {
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
       <View style={{alignSelf: 'center', width: '100%', alignItems: 'center'}}>
         <Image
-          source={require('../../assets/images/start.png')}
+          source={require('../../../assets/images/start.png')}
           style={{width: '50%', resizeMode: 'contain'}}
         />
         <Text style={{fontFamily: theme.fontFamily.bold, fontSize: 20}}>

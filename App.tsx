@@ -6,13 +6,14 @@ import {SafeAreaView} from 'react-native';
 import OtpScreen from './src/screens/auth/otpScreen/otpScreen';
 import ForgetPassword from './src/screens/auth/forgetPassword/forgetPassword';
 import NewPassword from './src/screens/auth/newPassword/newPassword';
-import Home from './src/screens/home/home';
+import Home from './src/screens/home/home/home';
 import Login from './src/screens/auth/login/login';
+import NewNotes from './src/screens/home/newNotes/newNotes';
 
 function App() {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Login />
+      <NewNotes />
     </SafeAreaView>
   );
 }

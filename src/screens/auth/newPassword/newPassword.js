@@ -10,7 +10,7 @@ const NewPassword = () => {
   const [code, setCode] = useState('');
   return (
     <View style={styles.mainView}>
-      <Topbar title={'Back to Login'} />
+      <Topbar title={'Back to Login'} type={'auth'} />
       <View style={styles.bottomView}>
         <Text style={styles.title}>Create a new Password</Text>
         <Text style={styles.des}>

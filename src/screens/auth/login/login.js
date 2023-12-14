@@ -9,10 +9,8 @@ import {
   View,
 } from 'react-native';
 import {theme} from '../../../theme/theme';
-import {Icon} from '@rneui/base';
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
-import Topbar from '../../../components/Topbar';
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);

@@ -19,7 +19,7 @@ const Register = () => {
   const [showRePass, setShowRePass] = useState(false);
   return (
     <View style={styles.mainCont}>
-      <Topbar title={'Back to Login'} />
+      <Topbar title={'Back to Login'} type={'auth'} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.register}>Register</Text>
         <Text style={styles.takeNotes}>And start taking notes</Text>

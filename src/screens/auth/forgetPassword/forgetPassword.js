@@ -10,7 +10,7 @@ const ForgetPassword = () => {
   const [code, setCode] = useState('');
   return (
     <View style={styles.mainView}>
-      <Topbar title={'Back to Login'} />
+      <Topbar title={'Back to Login'} type={'auth'} />
       <View style={styles.bottomView}>
         <Text style={styles.title}>Forget Password</Text>
         <Text style={styles.des}>
