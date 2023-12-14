@@ -1,16 +1,17 @@
 import React from 'react';
 import Splash from './src/screens/splash/splash';
-import OnBoard from './src/screens/onBoard/onBoard';
-import Register from './src/screens/register/register';
+import OnBoard from './src/screens/auth/onBoard/onBoard';
+import Register from './src/screens/auth/register/register';
 import {SafeAreaView} from 'react-native';
-import OtpScreen from './src/screens/otpScreen/otpScreen';
-import ForgetPassword from './src/screens/forgetPassword/forgetPassword';
-import NewPassword from './src/screens/newPassword/newPassword';
+import OtpScreen from './src/screens/auth/otpScreen/otpScreen';
+import ForgetPassword from './src/screens/auth/forgetPassword/forgetPassword';
+import NewPassword from './src/screens/auth/newPassword/newPassword';
+import Home from './src/screens/home/home';
 
 function App() {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <NewPassword />
+      <Home />
     </SafeAreaView>
   );
 }

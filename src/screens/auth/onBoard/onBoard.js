@@ -1,9 +1,9 @@
 import React, {useRef} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {theme} from '../../theme/theme';
+import {theme} from '../../../theme/theme';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Icon} from '@rneui/themed';
-import Button from '../../components/Button';
+import Button from '../../../components/Button';
 
 function OnBoard() {
   const slider = useRef();
@@ -12,19 +12,19 @@ function OnBoard() {
       key: 1,
       title: `Let's get started`,
       text: 'Note Down anything you want to achieve, today or in the future.',
-      image: require('../../assets/images/onBoard1.png'),
+      image: require('../../../assets/images/onBoard1.png'),
     },
     {
       key: 2,
       title: `Next`,
       text: 'Different goals, different way to note it down.',
-      image: require('../../assets/images/onBoard2.png'),
+      image: require('../../../assets/images/onBoard2.png'),
     },
     {
       key: 3,
       title: 'Proceed to Login',
       text: 'Text area, checklist, or some combination. Adapt with your needs',
-      image: require('../../assets/images/onBoard3.png'),
+      image: require('../../../assets/images/onBoard3.png'),
     },
   ];
 

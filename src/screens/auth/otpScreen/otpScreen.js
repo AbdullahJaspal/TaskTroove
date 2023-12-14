@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import Topbar from '../../components/Topbar';
+import Topbar from '../../../components/Topbar';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
-import {theme} from '../../theme/theme';
-import Button from '../../components/Button';
+import {theme} from '../../../theme/theme';
+import Button from '../../../components/Button';
 
 const {width, height} = Dimensions.get('screen');
 const OtpScreen = () => {

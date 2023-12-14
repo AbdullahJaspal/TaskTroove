@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {theme} from '../../theme/theme';
+import {theme} from '../../../theme/theme';
 import {Icon} from '@rneui/base';
-import InputField from '../../components/InputField';
-import Button from '../../components/Button';
-import Topbar from '../../components/Topbar';
+import InputField from '../../../components/InputField';
+import Button from '../../../components/Button';
+import Topbar from '../../../components/Topbar';
 
 const Register = () => {
   const [showPass, setShowPass] = useState(false);
@@ -62,7 +62,7 @@ const Register = () => {
         <TouchableOpacity style={styles.googleButton} onPress={() => {}}>
           <Text />
           <Image
-            source={require('../../assets/icons/google.png')}
+            source={require('../../../assets/icons/google.png')}
             style={{width: 20, height: 20}}
           />
           <Text style={styles.googleTxt}>{'Register with Google'}</Text>
