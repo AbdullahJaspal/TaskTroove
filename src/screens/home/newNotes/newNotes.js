@@ -45,21 +45,19 @@ const NewNotes = () => {
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <Topbar type={'home'} title={'New Notes'} />
       <View style={{width: '95%', alignSelf: 'center', marginVertical: 10}}>
-        <Text style={styles.title}>What Do You Want to Notes?</Text>
+        <Text style={styles.title}>What Do You Want to Note?</Text>
         {data.map(item => {
           return (
             <TouchableOpacity style={styles.tab(item.color)}>
               <View style={styles.iconWrap(item.iconColor)}>
                 <Image
-                  source={require('../../../assets/icons/idea.png')}
+                  source={item.img}
                   style={{tintColor: theme.colors.neutral.white}}
                 />
               </View>
               <View style={{width: '85%'}}>
-                <Text style={styles.tabTitle}>Interesting Idea</Text>
-                <Text style={styles.tabDes}>
-                  Use free text area, feel free to write it all
-                </Text>
+                <Text style={styles.tabTitle}>{item.title}</Text>
+                <Text style={styles.tabDes}>{item.des}</Text>
               </View>
             </TouchableOpacity>
           );
