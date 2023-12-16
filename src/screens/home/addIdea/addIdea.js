@@ -6,11 +6,16 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  KeyboardAvoidingView,
 } from 'react-native';
 import Topbar from '../../../components/Topbar';
 import {theme} from '../../../theme/theme';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {Icon} from '@rneui/base';
+import {actions, RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
+
+// Custom component for heading1 action
+const handleHead = ({tintColor}) => <Text style={{color: tintColor}}>H1</Text>;
 
 const tags = [
   'Important',
@@ -30,6 +35,7 @@ const colors = [
 
 const AddIdea = () => {
   const rbsheet = useRef();
+  const richText = useRef();
   const [backgroundColor, setBackgroundColor] = useState(
     theme.colors.neutral.white,
   );
@@ -74,6 +80,26 @@ const AddIdea = () => {
   return (
     <View style={{flex: 1, backgroundColor: backgroundColor}}>
       <Topbar type={'home'} />
+      <RichToolbar
+        style={{marginTop: 10}}
+        editor={richText}
+        // Connect the RichToolbar
+        // to the RichEditor
+        actions={[
+          actions.setBold,
+          actions.insertBulletsList,
+          actions.insertOrderedList,
+          actions.insertLink,
+          actions.setStrikethrough,
+          actions.setItalic,
+          actions.setUnderline,
+          actions.heading1,
+        ]}
+        // Define available text
+        // formatting actions
+        iconMap={{[actions.heading1]: handleHead}}
+      />
+
       <View style={styles.titleCont}>
         <Image
           source={require('../../../assets/icons/bulb.png')}
@@ -84,7 +110,7 @@ const AddIdea = () => {
           New Product Ideas
         </TextInput>
       </View>
-      <TextInput
+      {/* <TextInput
         multiline
         placeholder="Start typing ideas"
         onKeyPress={e => {
@@ -96,8 +122,33 @@ const AddIdea = () => {
         value={notes}
         onChangeText={setNotes}
         style={{...styles.input, textAlign: textAlign, fontWeight: fontWeight}}
-      />
+      /> */}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{flex: 1}}>
+        {/* Text component for  
+                        description */}
+        <Text
+          style={{
+            fontFamily: 'monospace',
+            fontWeight: 900,
+            fontSize: 15,
+            padding: 10,
+          }}>
+          Description:
+        </Text>
 
+        {/* RichEditor component  
+                        for text editing */}
+        <RichEditor
+          ref={richText}
+          onChange={descriptionText => {
+            // Handle the change in
+            // the editor's content
+            console.log('descriptionText:', descriptionText);
+          }}
+        />
+      </KeyboardAvoidingView>
       <View style={styles.line} />
       <Text style={styles.reminder}> Reminder set on 15/07/2021, 18:30</Text>
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
@@ -145,30 +196,6 @@ const AddIdea = () => {
         </View>
         <View style={styles.line} />
       </RBSheet>
-
-      <View
-        style={{
-          flexDirection: 'row',
-          width: '90%',
-          justifyContent: 'space-evenly',
-          backgroundColor: theme.colors.neutral.white,
-          paddingVertical: 10,
-          alignSelf: 'center',
-          borderRadius: 10,
-          position: 'absolute',
-          bottom: 10,
-        }}>
-        {format.map(item => {
-          return (
-            <TouchableOpacity onPress={item.onPress}>
-              <Image
-                source={item.img}
-                style={{width: 22, height: 22, resizeMode: 'contain'}}
-              />
-            </TouchableOpacity>
-          );
-        })}
-      </View>
     </View>
   );
 };
