@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
 import Topbar from '../../../components/Topbar';
@@ -13,9 +14,6 @@ import {theme} from '../../../theme/theme';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {Icon} from '@rneui/base';
 import {actions, RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
-
-// Custom component for heading1 action
-const handleHead = ({tintColor}) => <Text style={{color: tintColor}}>H1</Text>;
 
 const tags = [
   'Important',
@@ -34,8 +32,32 @@ const colors = [
 ];
 
 const AddIdea = () => {
-  const rbsheet = useRef();
   const richText = useRef();
+  const rbsheet = useRef();
+
+  const [descHTML, setDescHTML] = useState('');
+  const [showDescError, setShowDescError] = useState(false);
+
+  const richTextHandle = descriptionText => {
+    if (descriptionText) {
+      setShowDescError(false);
+      setDescHTML(descriptionText);
+    } else {
+      setShowDescError(true);
+      setDescHTML('');
+    }
+  };
+
+  const submitContentHandle = () => {
+    const replaceHTML = descHTML.replace(/<(.|\n)*?>/g, '').trim();
+    const replaceWhiteSpace = replaceHTML.replace(/&nbsp;/g, '').trim();
+
+    if (replaceWhiteSpace.length <= 0) {
+      setShowDescError(true);
+    } else {
+      // send data to your server!
+    }
+  };
   const [backgroundColor, setBackgroundColor] = useState(
     theme.colors.neutral.white,
   );
@@ -80,88 +102,59 @@ const AddIdea = () => {
   return (
     <View style={{flex: 1, backgroundColor: backgroundColor}}>
       <Topbar type={'home'} />
-      <RichToolbar
-        style={{marginTop: 10}}
-        editor={richText}
-        // Connect the RichToolbar
-        // to the RichEditor
-        actions={[
-          actions.setBold,
-          actions.insertBulletsList,
-          actions.insertOrderedList,
-          actions.insertLink,
-          actions.setStrikethrough,
-          actions.setItalic,
-          actions.setUnderline,
-          actions.heading1,
-        ]}
-        // Define available text
-        // formatting actions
-        iconMap={{[actions.heading1]: handleHead}}
-      />
-
-      <View style={styles.titleCont}>
-        <Image
-          source={require('../../../assets/icons/bulb.png')}
-          style={styles.icon}
+      <ScrollView>
+        <RichToolbar
+          editor={richText}
+          selectedIconTint="#873c1e"
+          iconTint="#312921"
+          actions={[
+            actions.insertImage,
+            actions.setBold,
+            actions.setItalic,
+            actions.insertBulletsList,
+            actions.insertOrderedList,
+            actions.insertLink,
+            actions.setStrikethrough,
+            actions.setUnderline,
+          ]}
+          style={styles.richTextToolbarStyle}
         />
-        <TextInput style={styles.title} multiline>
-          {' '}
-          New Product Ideas
-        </TextInput>
-      </View>
-      {/* <TextInput
-        multiline
-        placeholder="Start typing ideas"
-        onKeyPress={e => {
-          if (e.key === 'enter') {
-            console.log(string.fromcharcode());
-            setNotes(notes + '•' + ' ');
-          }
-        }}
-        value={notes}
-        onChangeText={setNotes}
-        style={{...styles.input, textAlign: textAlign, fontWeight: fontWeight}}
-      /> */}
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{flex: 1}}>
-        {/* Text component for  
-                        description */}
-        <Text
-          style={{
-            fontFamily: 'monospace',
-            fontWeight: 900,
-            fontSize: 15,
-            padding: 10,
-          }}>
-          Description:
-        </Text>
 
-        {/* RichEditor component  
-                        for text editing */}
-        <RichEditor
-          ref={richText}
-          onChange={descriptionText => {
-            // Handle the change in
-            // the editor's content
-            console.log('descriptionText:', descriptionText);
-          }}
-        />
-      </KeyboardAvoidingView>
-      <View style={styles.line} />
-      <Text style={styles.reminder}> Reminder set on 15/07/2021, 18:30</Text>
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-        {tags.map(item => {
-          return (
-            <TouchableOpacity
-              style={styles.tagCont}
-              onPress={() => rbsheet.current.open()}>
-              <Text style={styles.tagTxt}> {item} </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+        <View style={styles.titleCont}>
+          <Image
+            source={require('../../../assets/icons/bulb.png')}
+            style={styles.icon}
+          />
+          <TextInput style={styles.title} multiline>
+            {' '}
+            New Product Ideas
+          </TextInput>
+        </View>
+
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{flex: 1}}>
+          <RichEditor
+            ref={richText}
+            onChange={richTextHandle}
+            placeholder="Write your cool content here :)"
+            androidHardwareAccelerationDisabled={true}
+            style={styles.richTextEditorStyle}
+            initialHeight={250}
+          />
+        </KeyboardAvoidingView>
+        <View style={styles.line} />
+        <Text style={styles.reminder}> Reminder set on 15/07/2021, 18:30</Text>
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+          {tags.map(item => {
+            return (
+              <TouchableOpacity style={styles.tagCont} onPress={() => {}}>
+                <Text style={styles.tagTxt}> {item} </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </ScrollView>
 
       <RBSheet
         ref={rbsheet}
@@ -196,6 +189,54 @@ const AddIdea = () => {
         </View>
         <View style={styles.line} />
       </RBSheet>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          width: '100%',
+          justifyContent: 'space-evenly',
+          backgroundColor: theme.colors.neutral.white,
+          alignSelf: 'center',
+          borderRadius: 10,
+          position: 'absolute',
+          bottom: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          height: 40,
+        }}>
+        <Text style={{fontFamily: theme.fontFamily.medium, marginLeft: 10}}>
+          Last edited on 19.30
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            height: '100%',
+            width: '40%',
+            justifyContent: 'flex-end',
+          }}>
+          <Icon name="bookmark-o" type="font-awesome" />
+          <TouchableOpacity
+            style={{
+              backgroundColor: theme.colors.primary.base,
+              height: '100%',
+              width: 40,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginLeft: 10,
+              borderTopLeftRadius: 10,
+              borderBottomLeftRadius: 10,
+            }}
+            onPress={() => rbsheet.current.open()}>
+            <Icon
+              name="dots-three-horizontal"
+              type="entypo"
+              color={theme.colors.neutral.white}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
