@@ -27,11 +27,50 @@ const colors = [
   theme.colors.warning.light,
   theme.colors.neutral.white,
 ];
+
 const AddIdea = () => {
   const rbsheet = useRef();
   const [backgroundColor, setBackgroundColor] = useState(
     theme.colors.neutral.white,
   );
+  const [textAlign, setTextAlign] = useState('left');
+
+  const [fontWeight, setFontWeight] = useState('400');
+  const [notes, setNotes] = useState('');
+
+  const format = [
+    {
+      img: require('../../../assets/icons/left.png'),
+      onPress: () => {
+        setTextAlign('left');
+      },
+    },
+
+    {
+      img: require('../../../assets/icons/center.png'),
+      onPress: () => {
+        setTextAlign('center');
+      },
+    },
+    {
+      img: require('../../../assets/icons/right.png'),
+      onPress: () => {
+        setTextAlign('right');
+      },
+    },
+    {
+      img: require('../../../assets/icons/list.png'),
+    },
+    {
+      img: require('../../../assets/icons/bold.png'),
+      onPress: () => {
+        setFontWeight('bold');
+      },
+    },
+    {img: require('../../../assets/icons/underline.png')},
+    {img: require('../../../assets/icons/italic.png')},
+  ];
+
   return (
     <View style={{flex: 1, backgroundColor: backgroundColor}}>
       <Topbar type={'home'} />
@@ -40,13 +79,25 @@ const AddIdea = () => {
           source={require('../../../assets/icons/bulb.png')}
           style={styles.icon}
         />
-        <Text style={styles.title}> New Product Ideas</Text>
+        <TextInput style={styles.title} multiline>
+          {' '}
+          New Product Ideas
+        </TextInput>
       </View>
       <TextInput
         multiline
         placeholder="Start typing ideas"
-        style={styles.input}
+        onKeyPress={e => {
+          if (e.key === 'enter') {
+            console.log(string.fromcharcode());
+            setNotes(notes + '•' + ' ');
+          }
+        }}
+        value={notes}
+        onChangeText={setNotes}
+        style={{...styles.input, textAlign: textAlign, fontWeight: fontWeight}}
       />
+
       <View style={styles.line} />
       <Text style={styles.reminder}> Reminder set on 15/07/2021, 18:30</Text>
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
@@ -94,6 +145,30 @@ const AddIdea = () => {
         </View>
         <View style={styles.line} />
       </RBSheet>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          width: '90%',
+          justifyContent: 'space-evenly',
+          backgroundColor: theme.colors.neutral.white,
+          paddingVertical: 10,
+          alignSelf: 'center',
+          borderRadius: 10,
+          position: 'absolute',
+          bottom: 10,
+        }}>
+        {format.map(item => {
+          return (
+            <TouchableOpacity onPress={item.onPress}>
+              <Image
+                source={item.img}
+                style={{width: 22, height: 22, resizeMode: 'contain'}}
+              />
+            </TouchableOpacity>
+          );
+        })}
+      </View>
     </View>
   );
 };

@@ -42,3 +42,12 @@ export const theme = {
     semibold: 'SpaceGrotesk-SemiBold',
   },
 };
+
+const FontFamilyStylesheet = `
+@font-face {
+    font-family: 'SpaceGrotesk-Regular';
+    font-weight: normal;
+}
+`;
+
+export default FontFamilyStylesheet;
