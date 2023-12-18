@@ -1,8 +1,23 @@
-import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import Topbar from '../../../components/Topbar';
 import {theme} from '../../../theme/theme';
-
+import Animated, {
+  withSpring,
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+  withRepeat,
+} from 'react-native-reanimated';
+const {width, height} = Dimensions.get('screen');
 const data = [
   {
     img: require('../../../assets/icons/idea.png'),
@@ -40,28 +55,169 @@ const data = [
     iconColor: theme.colors.warning.dark,
   },
 ];
+
 const NewNotes = () => {
+  const [show, setShow] = useState(false);
+  const [animate, setAnimate] = useState(false);
+  const widt = useSharedValue(0);
+  const heigh = useSharedValue(0);
+  const borderB = useSharedValue(100);
+
+  const duration = 2000;
+
+  useEffect(() => {
+    setAnimate(true);
+    setTimeout(() => {
+      widt.value = withSpring(width / 1.05);
+      heigh.value = withSpring(80);
+      borderB.value = withSpring(10);
+      setShow(true);
+    }, 1000);
+    widt.value = withSpring(60);
+    heigh.value = withSpring(60);
+    borderB.value = withSpring(100);
+    setShow(false);
+  }, []);
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <Topbar type={'home'} title={'New Notes'} />
       <View style={{width: '95%', alignSelf: 'center', marginVertical: 10}}>
         <Text style={styles.title}>What Do You Want to Note?</Text>
-        {data.map(item => {
+
+        <Animated.View
+          style={{
+            width: widt,
+            height: heigh,
+            marginTop: 10,
+            borderRadius: borderB,
+            flexDirection: 'row',
+            alignSelf: 'flex-start',
+
+            ...styles.tab(data[0].color),
+          }}>
+          {animate && (
+            <View style={styles.iconWrap(data[0].iconColor)}>
+              <Image
+                source={data[0].img}
+                style={{tintColor: theme.colors.neutral.white}}
+              />
+            </View>
+          )}
+          {show && (
+            <View style={{width: '85%'}}>
+              <Text style={styles.tabTitle}>{data[0].title}</Text>
+              <Text style={styles.tabDes}>{data[0].des}</Text>
+            </View>
+          )}
+        </Animated.View>
+        <Animated.View
+          style={{
+            width: widt,
+            height: heigh,
+            marginTop: 10,
+            borderRadius: borderB,
+            flexDirection: 'row',
+            ...styles.tab(data[1].color),
+            alignSelf: 'center',
+          }}>
+          {animate && (
+            <View style={styles.iconWrap(data[1].iconColor)}>
+              <Image
+                source={data[1].img}
+                style={{tintColor: theme.colors.neutral.white}}
+              />
+            </View>
+          )}
+          {show && (
+            <View style={{width: '85%'}}>
+              <Text style={styles.tabTitle}>{data[1].title}</Text>
+              <Text style={styles.tabDes}>{data[1].des}</Text>
+            </View>
+          )}
+        </Animated.View>
+
+        <Animated.View
+          style={{
+            width: widt,
+            height: heigh,
+            marginTop: 10,
+            borderRadius: borderB,
+            flexDirection: 'row',
+            ...styles.tab(data[2].color),
+            alignSelf: 'flex-end',
+          }}>
+          {animate && (
+            <View style={styles.iconWrap(data[2].iconColor)}>
+              <Image
+                source={data[2].img}
+                style={{tintColor: theme.colors.neutral.white}}
+              />
+            </View>
+          )}
+          {show && (
+            <View style={{width: '85%'}}>
+              <Text style={styles.tabTitle}>{data[2].title}</Text>
+              <Text style={styles.tabDes}>{data[2].des}</Text>
+            </View>
+          )}
+        </Animated.View>
+        <Animated.View
+          style={{
+            width: widt,
+            height: heigh,
+            marginTop: 10,
+            borderRadius: borderB,
+            flexDirection: 'row',
+            ...styles.tab(data[3].color),
+            alignSelf: 'center',
+          }}>
+          {animate && (
+            <View style={styles.iconWrap(data[3].iconColor)}>
+              <Image
+                source={data[3].img}
+                style={{tintColor: theme.colors.neutral.white}}
+              />
+            </View>
+          )}
+          {show && (
+            <View style={{width: '85%'}}>
+              <Text style={styles.tabTitle}>{data[3].title}</Text>
+              <Text style={styles.tabDes}>{data[3].des}</Text>
+            </View>
+          )}
+        </Animated.View>
+
+        <Animated.View
+          style={{
+            width: widt,
+            height: heigh,
+            marginTop: 10,
+            borderRadius: borderB,
+            flexDirection: 'row',
+            ...styles.tab(data[4].color),
+          }}>
+          {animate && (
+            <View style={styles.iconWrap(data[4].iconColor)}>
+              <Image
+                source={data[4].img}
+                style={{tintColor: theme.colors.neutral.white}}
+              />
+            </View>
+          )}
+          {show && (
+            <View style={{width: '85%'}}>
+              <Text style={styles.tabTitle}>{data[4].title}</Text>
+              <Text style={styles.tabDes}>{data[4].des}</Text>
+            </View>
+          )}
+        </Animated.View>
+
+        {/* {data.map(item => {
           return (
-            <TouchableOpacity style={styles.tab(item.color)}>
-              <View style={styles.iconWrap(item.iconColor)}>
-                <Image
-                  source={item.img}
-                  style={{tintColor: theme.colors.neutral.white}}
-                />
-              </View>
-              <View style={{width: '85%'}}>
-                <Text style={styles.tabTitle}>{item.title}</Text>
-                <Text style={styles.tabDes}>{item.des}</Text>
-              </View>
-            </TouchableOpacity>
+         
           );
-        })}
+        })} */}
       </View>
     </View>
   );
@@ -76,11 +232,7 @@ const styles = StyleSheet.create({
   },
   tab: color => {
     return {
-      width: '100%',
-      height: 80,
-      flexDirection: 'row',
       backgroundColor: color,
-      borderRadius: 10,
       alignItems: 'center',
       paddingHorizontal: 10,
       justifyContent: 'space-between',
@@ -107,6 +259,28 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     fontSize: 12,
     marginTop: 5,
+  },
+
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
+  box: {
+    height: 80,
+    width: 80,
+    margin: 20,
+    borderWidth: 1,
+    borderColor: '#b58df1',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    color: '#b58df1',
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
   },
 });
 
