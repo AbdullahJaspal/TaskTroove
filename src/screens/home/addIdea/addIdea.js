@@ -232,6 +232,9 @@ const AddIdea = () => {
           iconType={'feather'}
           title={'Give Label'}
           value={'Not set'}
+          onPress={() => {
+            setModalVisible(true);
+          }}
         />
         <Section
           iconName="check"
@@ -263,7 +266,7 @@ const AddIdea = () => {
         <Modal
           animationType="slide"
           transparent={true}
-          visible={true}
+          visible={modalVisible}
           onRequestClose={() => {
             Alert.alert('Modal has been closed.');
             setModalVisible(!modalVisible);
@@ -474,6 +477,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22,
+    backgroundColor: 'rbga(0,0,0,0.4)',
   },
   modalView: {
     margin: 20,
