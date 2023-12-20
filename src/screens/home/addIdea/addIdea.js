@@ -270,6 +270,16 @@ const AddIdea = () => {
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
+              <View style={styles.crossCont}>
+                <Icon
+                  name="closecircle"
+                  type="ant-design"
+                  color={theme.colors.neutral.baseGrey}
+                  onPress={() => {
+                    setModalVisible(false);
+                  }}
+                />
+              </View>
               <Text style={{fontFamily: theme.fontFamily.semibold}}>
                 Label Name
               </Text>
@@ -280,33 +290,46 @@ const AddIdea = () => {
                 onChangeText={setLabel}
                 onSubmitEditing={() => onSubmitted()}
               />
-              <Text style={styles.changeBg}>Press "Enter" to add label</Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  width: '95%',
-                  alignSelf: 'center',
-                  flexWrap: 'nowrap',
-                }}>
-                {labels.map(item => {
-                  return (
-                    <View
-                      style={{
-                        backgroundColor: theme.colors.neutral.baseGrey,
-                        paddingHorizontal: 10,
-                        paddingVertical: 4,
-                        marginLeft: 5,
-                        borderRadius: 100,
-                        flexDirection: 'row',
-                      }}>
-                      <Text style={{fontFamily: theme.fontFamily.regular}}>
-                        {item}
-                      </Text>
-                      <Icon />
-                    </View>
-                  );
-                })}
-              </View>
+              <Text style={styles.changeBg}>
+                Press "Enter" after label to add
+              </Text>
+              {labels.length !== 0 && (
+                <View>
+                  <View style={styles.tagCont}>
+                    {labels.map(item => {
+                      return (
+                        <View style={styles.tagWrap}>
+                          <Text style={{fontFamily: theme.fontFamily.regular}}>
+                            {item}
+                          </Text>
+                          <Icon
+                            name="closecircle"
+                            type="ant-design"
+                            size={14}
+                            style={{marginLeft: 10}}
+                            onPress={() => {
+                              let arr = labels.filter(ite => {
+                                return item !== ite;
+                              });
+                              setLabels(arr);
+                            }}
+                          />
+                        </View>
+                      );
+                    })}
+                  </View>
+                  <Section
+                    iconName="delete"
+                    iconType={'material-icons'}
+                    title={'Clear all tags'}
+                    value={''}
+                    color={theme.colors.error.base}
+                    onPressL={() => {
+                      setLabels([]);
+                    }}
+                  />
+                </View>
+              )}
             </View>
           </View>
         </Modal>
@@ -373,14 +396,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   tagCont: {
-    marginTop: 10,
-    marginLeft: 10,
-    backgroundColor: theme.colors.neutral.lightGrey,
-    padding: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 50,
-    paddingHorizontal: 8,
+    flexDirection: 'row',
+    width: '95%',
+    alignSelf: 'center',
+    flexWrap: 'wrap',
   },
   tagTxt: {
     fontSize: 14,
@@ -480,6 +499,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderColor: theme.colors.neutral.darkGrey,
     paddingHorizontal: 10,
+  },
+  tagWrap: {
+    backgroundColor: theme.colors.neutral.baseGrey,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    marginLeft: 5,
+    borderRadius: 100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
   },
 });
 

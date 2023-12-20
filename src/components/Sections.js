@@ -1,6 +1,6 @@
 import {Icon} from '@rneui/base';
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {theme} from '../theme/theme';
 
 const Section = ({
@@ -10,6 +10,7 @@ const Section = ({
   value,
   color = 'black',
   onPress,
+  onPressL,
 }) => {
   return (
     <View
@@ -21,22 +22,24 @@ const Section = ({
         justifyContent: 'space-between',
         marginTop: 10,
       }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-        <Icon name={iconName} type={iconType} size={22} color={color} />
-        <Text
+      <TouchableOpacity onPress={onPressL}>
+        <View
           style={{
-            fontFamily: theme.fontFamily.semibold,
-            marginLeft: 8,
-            color: color,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
           }}>
-          {title}
-        </Text>
-      </View>
+          <Icon name={iconName} type={iconType} size={22} color={color} />
+          <Text
+            style={{
+              fontFamily: theme.fontFamily.semibold,
+              marginLeft: 8,
+              color: color,
+            }}>
+            {title}
+          </Text>
+        </View>
+      </TouchableOpacity>
       <Text
         onPress={onPress}
         style={{
