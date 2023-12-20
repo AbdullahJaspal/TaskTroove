@@ -101,10 +101,16 @@ const AddIdea = () => {
   };
 
   const handleKeyDown = e => {
+    console.log(label);
     if (e.nativeEvent.key == 'Enter') {
-      labels.push(label);
-      setLabel('');
     }
+  };
+
+  const onSubmitted = () => {
+    console.log(label);
+    labels.push(label);
+    console.log(labels);
+    setLabel('');
   };
 
   return (
@@ -272,13 +278,33 @@ const AddIdea = () => {
                 onKeyPress={handleKeyDown}
                 value={label}
                 onChangeText={setLabel}
+                onSubmitEditing={() => onSubmitted()}
               />
               <Text style={styles.changeBg}>Press "Enter" to add label</Text>
-              <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: '95%',
+                  alignSelf: 'center',
+                  flexWrap: 'nowrap',
+                }}>
                 {labels.map(item => {
-                  <View>
-                    <Text>{item}</Text>
-                  </View>;
+                  return (
+                    <View
+                      style={{
+                        backgroundColor: theme.colors.neutral.baseGrey,
+                        paddingHorizontal: 10,
+                        paddingVertical: 4,
+                        marginLeft: 5,
+                        borderRadius: 100,
+                        flexDirection: 'row',
+                      }}>
+                      <Text style={{fontFamily: theme.fontFamily.regular}}>
+                        {item}
+                      </Text>
+                      <Icon />
+                    </View>
+                  );
                 })}
               </View>
             </View>
