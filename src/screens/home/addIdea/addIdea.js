@@ -80,6 +80,7 @@ const AddIdea = () => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [reminder, setReminder] = useState(false);
+  const [pickerMode, setPickerMode] = useState('datetime');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalReminderVisible, setModalReminderVisible] = useState(false);
   const [label, setLabel] = useState('');
@@ -271,6 +272,7 @@ const AddIdea = () => {
           modal
           open={open}
           date={date}
+          mode={pickerMode}
           onConfirm={date => {
             setOpen(false);
             setDate(date);
@@ -310,13 +312,19 @@ const AddIdea = () => {
               <Section
                 title={'Date'}
                 value={reminder ? moment(date).format('MMM Do YY') : 'Not set'}
-                onPress={() => {}}
+                onPress={() => {
+                  setPickerMode('date');
+                  setOpen(true);
+                }}
               />
 
               <Section
                 title={'Time'}
                 value={reminder ? moment(date).format('LT') : 'Not set'}
-                onPress={() => {}}
+                onPress={() => {
+                  setPickerMode('time');
+                  setOpen(true);
+                }}
               />
               <Section
                 title={'Repeat'}
