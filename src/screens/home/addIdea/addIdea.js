@@ -113,6 +113,161 @@ const AddIdea = () => {
     setLabel('');
   };
 
+  const LabelModal = () => {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.crossCont}>
+              <Icon
+                name="closecircle"
+                type="ant-design"
+                color={theme.colors.neutral.baseGrey}
+                onPress={() => {
+                  setModalVisible(false);
+                }}
+              />
+            </View>
+            <Text style={{fontFamily: theme.fontFamily.semibold}}>
+              Label Name
+            </Text>
+            <TextInput
+              style={styles.labelInput}
+              onKeyPress={handleKeyDown}
+              value={label}
+              onChangeText={setLabel}
+              onSubmitEditing={() => onSubmitted()}
+            />
+            <Text style={styles.changeBg}>
+              Press "Enter" after label to add
+            </Text>
+            {labels.length !== 0 && (
+              <View>
+                <View style={styles.tagCont}>
+                  {labels.map(item => {
+                    return (
+                      <View style={styles.tagWrap}>
+                        <Text style={{fontFamily: theme.fontFamily.regular}}>
+                          {item}
+                        </Text>
+                        <Icon
+                          name="closecircle"
+                          type="ant-design"
+                          size={14}
+                          style={{marginLeft: 10}}
+                          onPress={() => {
+                            let arr = labels.filter(ite => {
+                              return item !== ite;
+                            });
+                            setLabels(arr);
+                          }}
+                        />
+                      </View>
+                    );
+                  })}
+                </View>
+                <Section
+                  iconName="delete"
+                  iconType={'material-icons'}
+                  title={'Clear all tags'}
+                  value={''}
+                  color={theme.colors.error.base}
+                  onPressL={() => {
+                    setLabels([]);
+                  }}
+                />
+              </View>
+            )}
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
+  const ReminderModal = () => {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.crossCont}>
+              <Icon
+                name="closecircle"
+                type="ant-design"
+                color={theme.colors.neutral.baseGrey}
+                onPress={() => {
+                  setModalVisible(false);
+                }}
+              />
+            </View>
+            <Text style={{fontFamily: theme.fontFamily.semibold}}>
+              Label Name
+            </Text>
+            <TextInput
+              style={styles.labelInput}
+              onKeyPress={handleKeyDown}
+              value={label}
+              onChangeText={setLabel}
+              onSubmitEditing={() => onSubmitted()}
+            />
+            <Text style={styles.changeBg}>
+              Press "Enter" after label to add
+            </Text>
+            {labels.length !== 0 && (
+              <View>
+                <View style={styles.tagCont}>
+                  {labels.map(item => {
+                    return (
+                      <View style={styles.tagWrap}>
+                        <Text style={{fontFamily: theme.fontFamily.regular}}>
+                          {item}
+                        </Text>
+                        <Icon
+                          name="closecircle"
+                          type="ant-design"
+                          size={14}
+                          style={{marginLeft: 10}}
+                          onPress={() => {
+                            let arr = labels.filter(ite => {
+                              return item !== ite;
+                            });
+                            setLabels(arr);
+                          }}
+                        />
+                      </View>
+                    );
+                  })}
+                </View>
+                <Section
+                  iconName="delete"
+                  iconType={'material-icons'}
+                  title={'Clear all tags'}
+                  value={''}
+                  color={theme.colors.error.base}
+                  onPressL={() => {
+                    setLabels([]);
+                  }}
+                />
+              </View>
+            )}
+          </View>
+        </View>
+      </Modal>
+    );
+  };
   return (
     <View style={{flex: 1, backgroundColor: backgroundColor}}>
       <Topbar type={'home'} />
@@ -158,16 +313,30 @@ const AddIdea = () => {
           />
         </KeyboardAvoidingView>
         <View style={styles.line} />
-        <Text style={styles.reminder}> Reminder set on 15/07/2021, 18:30</Text>
-        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-          {tags.map(item => {
-            return (
-              <TouchableOpacity style={styles.tagCont} onPress={() => {}}>
-                <Text style={styles.tagTxt}> {item} </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+        {reminder ? (
+          <Text style={styles.reminder}>
+            Reminder set on {moment(date).format('MMM Do YY,  LT')}
+          </Text>
+        ) : (
+          <Text style={styles.changeBg}>No reminder</Text>
+        )}
+        {labels.length !== 0 ? (
+          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <View style={styles.tagCont}>
+              {labels.map(item => {
+                return (
+                  <View style={styles.tagWrap}>
+                    <Text style={{fontFamily: theme.fontFamily.regular}}>
+                      {item}
+                    </Text>
+                  </View>
+                );
+              })}
+            </View>
+          </View>
+        ) : (
+          <Text style={styles.changeBg}>No labels yet</Text>
+        )}
       </ScrollView>
 
       <RBSheet
@@ -231,7 +400,7 @@ const AddIdea = () => {
           iconName="tag"
           iconType={'feather'}
           title={'Give Label'}
-          value={'Not set'}
+          value={labels.length === 0 ? 'Not set' : 'Add More'}
           onPress={() => {
             setModalVisible(true);
           }}
@@ -263,79 +432,8 @@ const AddIdea = () => {
             setOpen(false);
           }}
         />
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setModalVisible(!modalVisible);
-          }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <View style={styles.crossCont}>
-                <Icon
-                  name="closecircle"
-                  type="ant-design"
-                  color={theme.colors.neutral.baseGrey}
-                  onPress={() => {
-                    setModalVisible(false);
-                  }}
-                />
-              </View>
-              <Text style={{fontFamily: theme.fontFamily.semibold}}>
-                Label Name
-              </Text>
-              <TextInput
-                style={styles.labelInput}
-                onKeyPress={handleKeyDown}
-                value={label}
-                onChangeText={setLabel}
-                onSubmitEditing={() => onSubmitted()}
-              />
-              <Text style={styles.changeBg}>
-                Press "Enter" after label to add
-              </Text>
-              {labels.length !== 0 && (
-                <View>
-                  <View style={styles.tagCont}>
-                    {labels.map(item => {
-                      return (
-                        <View style={styles.tagWrap}>
-                          <Text style={{fontFamily: theme.fontFamily.regular}}>
-                            {item}
-                          </Text>
-                          <Icon
-                            name="closecircle"
-                            type="ant-design"
-                            size={14}
-                            style={{marginLeft: 10}}
-                            onPress={() => {
-                              let arr = labels.filter(ite => {
-                                return item !== ite;
-                              });
-                              setLabels(arr);
-                            }}
-                          />
-                        </View>
-                      );
-                    })}
-                  </View>
-                  <Section
-                    iconName="delete"
-                    iconType={'material-icons'}
-                    title={'Clear all tags'}
-                    value={''}
-                    color={theme.colors.error.base}
-                    onPressL={() => {
-                      setLabels([]);
-                    }}
-                  />
-                </View>
-              )}
-            </View>
-          </View>
-        </Modal>
+
+        <LabelModal />
       </RBSheet>
 
       <View style={styles.bottomCont}>
