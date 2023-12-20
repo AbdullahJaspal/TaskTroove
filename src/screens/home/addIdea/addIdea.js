@@ -200,6 +200,7 @@ const AddIdea = () => {
             paddingBottom: 30,
           },
         }}>
+        <Topbar title={'Extra'} type={'auth'} />
         <View style={styles.crossCont}>
           <Icon
             name="closecircle"
@@ -292,6 +293,7 @@ const AddIdea = () => {
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
+              <Topbar title={'Extra'} type={'auth'} />
               <View style={styles.crossCont}>
                 <Icon
                   name="closecircle"
@@ -326,17 +328,18 @@ const AddIdea = () => {
                   setOpen(true);
                 }}
               />
-              <Section
+              {/* <Section
                 title={'Repeat'}
                 value={labels.length === 0 ? 'Not set' : 'Add More'}
                 onPress={() => {}}
-              />
+              /> */}
             </View>
           </View>
         </Modal>
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
+              <Topbar title={'Extra'} type={'auth'} />
               <View style={styles.crossCont}>
                 <Icon
                   name="closecircle"
@@ -480,6 +483,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginTop: 10,
     marginBottom: 10,
+    right: 5,
+    position: 'absolute',
   },
   changeBg: {
     fontFamily: theme.fontFamily.regular,
