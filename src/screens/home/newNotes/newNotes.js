@@ -93,6 +93,7 @@ const NewNotes = () => {
             borderRadius: borderB,
             flexDirection: 'row',
             alignSelf: 'flex-start',
+            
 
             ...styles.tab(data[0].color),
           }}>

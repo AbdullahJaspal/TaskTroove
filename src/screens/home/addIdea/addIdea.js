@@ -14,7 +14,45 @@ import {theme} from '../../../theme/theme';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {Icon} from '@rneui/base';
 import {actions, RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
+import Section from '../../../components/Sections';
+import Animated, {
+  withSpring,
+  useSharedValue,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 
+const format = [
+  {
+    img: require('../../../assets/icons/left.png'),
+    onPress: () => {
+      setTextAlign('left');
+    },
+  },
+
+  {
+    img: require('../../../assets/icons/center.png'),
+    onPress: () => {
+      setTextAlign('center');
+    },
+  },
+  {
+    img: require('../../../assets/icons/right.png'),
+    onPress: () => {
+      setTextAlign('right');
+    },
+  },
+  {
+    img: require('../../../assets/icons/list.png'),
+  },
+  {
+    img: require('../../../assets/icons/bold.png'),
+    onPress: () => {
+      setFontWeight('bold');
+    },
+  },
+  {img: require('../../../assets/icons/underline.png')},
+  {img: require('../../../assets/icons/italic.png')},
+];
 const tags = [
   'Important',
   'Top Priority',
@@ -32,11 +70,17 @@ const colors = [
 ];
 
 const AddIdea = () => {
+  const [backgroundColor, setBackgroundColor] = useState(
+    theme.colors.neutral.white,
+  );
+
   const richText = useRef();
   const rbsheet = useRef();
+  const marginLef = useSharedValue(1);
+  const borderB = useSharedValue(0);
 
-  const [descHTML, setDescHTML] = useState('');
-  const [showDescError, setShowDescError] = useState(false);
+  console.log('marginLef');
+  console.log(marginLef.value);
 
   const richTextHandle = descriptionText => {
     if (descriptionText) {
@@ -48,56 +92,17 @@ const AddIdea = () => {
     }
   };
 
-  const submitContentHandle = () => {
-    const replaceHTML = descHTML.replace(/<(.|\n)*?>/g, '').trim();
-    const replaceWhiteSpace = replaceHTML.replace(/&nbsp;/g, '').trim();
+  const offset = useSharedValue(0);
 
-    if (replaceWhiteSpace.length <= 0) {
-      setShowDescError(true);
-    } else {
-      // send data to your server!
-    }
+  const style = useAnimatedStyle(() => ({
+    transform: [{translateX: offset.value}],
+  }));
+
+  const OFFSET = 40;
+
+  const handlePress = () => {
+    offset.value = withTiming(OFFSET);
   };
-  const [backgroundColor, setBackgroundColor] = useState(
-    theme.colors.neutral.white,
-  );
-  const [textAlign, setTextAlign] = useState('left');
-
-  const [fontWeight, setFontWeight] = useState('400');
-  const [notes, setNotes] = useState('');
-
-  const format = [
-    {
-      img: require('../../../assets/icons/left.png'),
-      onPress: () => {
-        setTextAlign('left');
-      },
-    },
-
-    {
-      img: require('../../../assets/icons/center.png'),
-      onPress: () => {
-        setTextAlign('center');
-      },
-    },
-    {
-      img: require('../../../assets/icons/right.png'),
-      onPress: () => {
-        setTextAlign('right');
-      },
-    },
-    {
-      img: require('../../../assets/icons/list.png'),
-    },
-    {
-      img: require('../../../assets/icons/bold.png'),
-      onPress: () => {
-        setFontWeight('bold');
-      },
-    },
-    {img: require('../../../assets/icons/underline.png')},
-    {img: require('../../../assets/icons/italic.png')},
-  ];
 
   return (
     <View style={{flex: 1, backgroundColor: backgroundColor}}>
@@ -139,7 +144,7 @@ const AddIdea = () => {
             onChange={richTextHandle}
             placeholder="Write your cool content here :)"
             androidHardwareAccelerationDisabled={true}
-            style={styles.richTextEditorStyle}
+            editorStyle={{backgroundColor: backgroundColor}}
             initialHeight={250}
           />
         </KeyboardAvoidingView>
@@ -158,10 +163,15 @@ const AddIdea = () => {
 
       <RBSheet
         ref={rbsheet}
-        height={300}
         openDuration={250}
+        height={400}
         customStyles={{
-          container: {},
+          container: {
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            justifyContent: 'space-evenly',
+            paddingBottom: 30,
+          },
         }}>
         <View style={styles.crossCont}>
           <Icon
@@ -174,61 +184,63 @@ const AddIdea = () => {
           />
         </View>
         <Text style={styles.changeBg}>CHANGE BACKGROUND</Text>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          {colors.map(item => {
+        <View
+          style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
+          {colors.map((item, index) => {
             return (
-              <View style={styles.colorCont(backgroundColor, item)}>
+              <Animated.View
+                style={{
+                  position: 'absolute',
+                  left: marginLef.value * index,
+                  ...styles.colorCont(backgroundColor, item),
+                }}>
                 <TouchableOpacity
                   style={styles.color(backgroundColor, item)}
                   onPress={() => {
                     setBackgroundColor(item);
                   }}></TouchableOpacity>
-              </View>
+              </Animated.View>
             );
           })}
         </View>
         <View style={styles.line} />
+        <Text style={styles.changeBg}>Extra</Text>
+        <Section
+          iconName="clock"
+          iconType={'feather'}
+          title={'Set Reminder'}
+          value={'Not set'}
+        />
+        <Section
+          iconName="tag"
+          iconType={'feather'}
+          title={'Give Label'}
+          value={'Not set'}
+        />
+        <View style={styles.line} />
+
+        <Section
+          iconName="delete"
+          iconType={'material-icons'}
+          title={'Delete Notes'}
+          value={''}
+          color={theme.colors.error.base}
+        />
       </RBSheet>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          width: '100%',
-          justifyContent: 'space-evenly',
-          backgroundColor: theme.colors.neutral.white,
-          alignSelf: 'center',
-          borderRadius: 10,
-          position: 'absolute',
-          bottom: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: 40,
-        }}>
+      <View style={styles.bottomCont}>
         <Text style={{fontFamily: theme.fontFamily.medium, marginLeft: 10}}>
           Last edited on 19.30
         </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            height: '100%',
-            width: '40%',
-            justifyContent: 'flex-end',
-          }}>
+        <View style={styles.bottomLeft}>
           <Icon name="bookmark-o" type="font-awesome" />
           <TouchableOpacity
-            style={{
-              backgroundColor: theme.colors.primary.base,
-              height: '100%',
-              width: 40,
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginLeft: 10,
-              borderTopLeftRadius: 10,
-              borderBottomLeftRadius: 10,
-            }}
-            onPress={() => rbsheet.current.open()}>
+            style={styles.extraButton}
+            onPress={() => {
+              rbsheet.current.open();
+              borderB.value = withSpring(100);
+              marginLef.value = withSpring(45);
+            }}>
             <Icon
               name="dots-three-horizontal"
               type="entypo"
@@ -302,6 +314,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     marginLeft: 10,
     color: theme.colors.neutral.darkGrey,
+    marginTop: 5,
   },
   colorCont: (color, item) => {
     return {
@@ -319,12 +332,43 @@ const styles = StyleSheet.create({
   color: (color, item) => {
     return {
       backgroundColor: item,
-      width: 30,
-      height: 30,
+      width: '80%',
+      height: '80%',
       borderRadius: 50,
       borderWidth: 1,
       borderColor: theme.colors.neutral.lightGrey,
     };
+  },
+  bottomCont: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-evenly',
+    backgroundColor: theme.colors.neutral.white,
+    alignSelf: 'center',
+    borderRadius: 10,
+    position: 'absolute',
+    bottom: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 40,
+  },
+  bottomLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '100%',
+    width: '40%',
+    justifyContent: 'flex-end',
+  },
+  extraButton: {
+    backgroundColor: theme.colors.primary.base,
+    height: '100%',
+    width: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 10,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
 });
 

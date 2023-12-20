@@ -34,6 +34,7 @@ function OnBoard() {
         <Image source={item.image} />
         <Text style={styles.title}>{item.text}</Text>
         <Button
+          buttonStyle={{backgroundColor: 'white'}}
           title={item.title}
           onPress={() => {
             slider.current.goToSlide(item.key);
