@@ -85,7 +85,7 @@ const AddIdea = () => {
   const [label, setLabel] = useState('');
   const [labels, setLabels] = useState([]);
   const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const toggleSwitch = () => setReminder(previousState => !previousState);
 
   console.log(date);
   const richText = useRef();
@@ -238,7 +238,7 @@ const AddIdea = () => {
           iconName="clock"
           iconType={'feather'}
           title={'Set Reminder'}
-          value={reminder ? moment(date).format('MMM Do YY   LT') : 'Not set'}
+          value={reminder ? 'Change' : 'Not set'}
           onPress={() => {
             setModalReminderVisible(true);
           }}
@@ -305,7 +305,7 @@ const AddIdea = () => {
                 value={labels.length === 0 ? 'Not set' : 'Add More'}
                 type="2nd"
                 toggleSwitch={toggleSwitch}
-                isEnabled={isEnabled}
+                isEnabled={reminder}
               />
               <Section
                 title={'Date'}
@@ -471,6 +471,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginRight: 10,
     marginTop: 10,
+    marginBottom: 10,
   },
   changeBg: {
     fontFamily: theme.fontFamily.regular,
