@@ -81,8 +81,11 @@ const AddIdea = () => {
   const [open, setOpen] = useState(false);
   const [reminder, setReminder] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalReminderVisible, setModalReminderVisible] = useState(false);
   const [label, setLabel] = useState('');
   const [labels, setLabels] = useState([]);
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   console.log(date);
   const richText = useRef();
@@ -113,161 +116,6 @@ const AddIdea = () => {
     setLabel('');
   };
 
-  const LabelModal = () => {
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View style={styles.crossCont}>
-              <Icon
-                name="closecircle"
-                type="ant-design"
-                color={theme.colors.neutral.baseGrey}
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-              />
-            </View>
-            <Text style={{fontFamily: theme.fontFamily.semibold}}>
-              Label Name
-            </Text>
-            <TextInput
-              style={styles.labelInput}
-              onKeyPress={handleKeyDown}
-              value={label}
-              onChangeText={setLabel}
-              onSubmitEditing={() => onSubmitted()}
-            />
-            <Text style={styles.changeBg}>
-              Press "Enter" after label to add
-            </Text>
-            {labels.length !== 0 && (
-              <View>
-                <View style={styles.tagCont}>
-                  {labels.map(item => {
-                    return (
-                      <View style={styles.tagWrap}>
-                        <Text style={{fontFamily: theme.fontFamily.regular}}>
-                          {item}
-                        </Text>
-                        <Icon
-                          name="closecircle"
-                          type="ant-design"
-                          size={14}
-                          style={{marginLeft: 10}}
-                          onPress={() => {
-                            let arr = labels.filter(ite => {
-                              return item !== ite;
-                            });
-                            setLabels(arr);
-                          }}
-                        />
-                      </View>
-                    );
-                  })}
-                </View>
-                <Section
-                  iconName="delete"
-                  iconType={'material-icons'}
-                  title={'Clear all tags'}
-                  value={''}
-                  color={theme.colors.error.base}
-                  onPressL={() => {
-                    setLabels([]);
-                  }}
-                />
-              </View>
-            )}
-          </View>
-        </View>
-      </Modal>
-    );
-  };
-
-  const ReminderModal = () => {
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View style={styles.crossCont}>
-              <Icon
-                name="closecircle"
-                type="ant-design"
-                color={theme.colors.neutral.baseGrey}
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-              />
-            </View>
-            <Text style={{fontFamily: theme.fontFamily.semibold}}>
-              Label Name
-            </Text>
-            <TextInput
-              style={styles.labelInput}
-              onKeyPress={handleKeyDown}
-              value={label}
-              onChangeText={setLabel}
-              onSubmitEditing={() => onSubmitted()}
-            />
-            <Text style={styles.changeBg}>
-              Press "Enter" after label to add
-            </Text>
-            {labels.length !== 0 && (
-              <View>
-                <View style={styles.tagCont}>
-                  {labels.map(item => {
-                    return (
-                      <View style={styles.tagWrap}>
-                        <Text style={{fontFamily: theme.fontFamily.regular}}>
-                          {item}
-                        </Text>
-                        <Icon
-                          name="closecircle"
-                          type="ant-design"
-                          size={14}
-                          style={{marginLeft: 10}}
-                          onPress={() => {
-                            let arr = labels.filter(ite => {
-                              return item !== ite;
-                            });
-                            setLabels(arr);
-                          }}
-                        />
-                      </View>
-                    );
-                  })}
-                </View>
-                <Section
-                  iconName="delete"
-                  iconType={'material-icons'}
-                  title={'Clear all tags'}
-                  value={''}
-                  color={theme.colors.error.base}
-                  onPressL={() => {
-                    setLabels([]);
-                  }}
-                />
-              </View>
-            )}
-          </View>
-        </View>
-      </Modal>
-    );
-  };
   return (
     <View style={{flex: 1, backgroundColor: backgroundColor}}>
       <Topbar type={'home'} />
@@ -392,8 +240,7 @@ const AddIdea = () => {
           title={'Set Reminder'}
           value={reminder ? moment(date).format('MMM Do YY   LT') : 'Not set'}
           onPress={() => {
-            setOpen(true);
-            setReminder(true);
+            setModalReminderVisible(true);
           }}
         />
         <Section
@@ -433,7 +280,118 @@ const AddIdea = () => {
           }}
         />
 
-        <LabelModal />
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalReminderVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalReminderVisible(!modalReminderVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <View style={styles.crossCont}>
+                <Icon
+                  name="closecircle"
+                  type="ant-design"
+                  color={theme.colors.neutral.baseGrey}
+                  onPress={() => {
+                    setModalReminderVisible(false);
+                  }}
+                />
+              </View>
+              <Section
+                title={'Remider'}
+                value={labels.length === 0 ? 'Not set' : 'Add More'}
+                type="2nd"
+                toggleSwitch={toggleSwitch}
+                isEnabled={isEnabled}
+              />
+              <Section
+                title={'Date'}
+                value={reminder ? moment(date).format('MMM Do YY') : 'Not set'}
+                onPress={() => {}}
+              />
+
+              <Section
+                title={'Time'}
+                value={reminder ? moment(date).format('LT') : 'Not set'}
+                onPress={() => {}}
+              />
+              <Section
+                title={'Repeat'}
+                value={labels.length === 0 ? 'Not set' : 'Add More'}
+                onPress={() => {}}
+              />
+            </View>
+          </View>
+        </Modal>
+        <Modal animationType="slide" transparent={true} visible={modalVisible}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <View style={styles.crossCont}>
+                <Icon
+                  name="closecircle"
+                  type="ant-design"
+                  color={theme.colors.neutral.baseGrey}
+                  onPress={() => {
+                    setModalVisible(false);
+                  }}
+                />
+              </View>
+              <Text style={{fontFamily: theme.fontFamily.semibold}}>
+                Label Name
+              </Text>
+              <TextInput
+                style={styles.labelInput}
+                onKeyPress={handleKeyDown}
+                value={label}
+                onChangeText={setLabel}
+                onSubmitEditing={() => onSubmitted()}
+              />
+              <Text style={styles.changeBg}>
+                Press "Enter" after label to add
+              </Text>
+              {labels.length !== 0 && (
+                <View>
+                  <View style={styles.tagCont}>
+                    {labels.map(item => {
+                      return (
+                        <View style={styles.tagWrap}>
+                          <Text style={{fontFamily: theme.fontFamily.regular}}>
+                            {item}
+                          </Text>
+                          <Icon
+                            name="closecircle"
+                            type="ant-design"
+                            size={14}
+                            style={{marginLeft: 10}}
+                            onPress={() => {
+                              let arr = labels.filter(ite => {
+                                return item !== ite;
+                              });
+                              setLabels(arr);
+                            }}
+                          />
+                        </View>
+                      );
+                    })}
+                  </View>
+                  <Section
+                    iconName="delete"
+                    iconType={'material-icons'}
+                    title={'Clear all tags'}
+                    value={''}
+                    color={theme.colors.error.base}
+                    onPressL={() => {
+                      setLabels([]);
+                    }}
+                  />
+                </View>
+              )}
+            </View>
+          </View>
+        </Modal>
       </RBSheet>
 
       <View style={styles.bottomCont}>
@@ -581,7 +539,7 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    paddingVertical: 20,
+    paddingBottom: 20,
     paddingHorizontal: 10,
     width: '95%',
     shadowColor: '#000',
