@@ -15,11 +15,14 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {Icon} from '@rneui/base';
 import {actions, RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
 import Section from '../../../components/Sections';
+import DatePicker from 'react-native-date-picker';
+
 import Animated, {
   withSpring,
   useSharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+import moment from 'moment';
 
 const format = [
   {
@@ -73,14 +76,15 @@ const AddIdea = () => {
   const [backgroundColor, setBackgroundColor] = useState(
     theme.colors.neutral.white,
   );
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+  const [reminder, setReminder] = useState(false);
 
+  console.log(date);
   const richText = useRef();
   const rbsheet = useRef();
-  const marginLef = useSharedValue(1);
-  const borderB = useSharedValue(0);
-
-  console.log('marginLef');
-  console.log(marginLef.value);
+  const widt = useSharedValue(1);
+  const borderRad = useSharedValue(1);
 
   const richTextHandle = descriptionText => {
     if (descriptionText) {
@@ -90,18 +94,6 @@ const AddIdea = () => {
       setShowDescError(true);
       setDescHTML('');
     }
-  };
-
-  const offset = useSharedValue(0);
-
-  const style = useAnimatedStyle(() => ({
-    transform: [{translateX: offset.value}],
-  }));
-
-  const OFFSET = 40;
-
-  const handlePress = () => {
-    offset.value = withTiming(OFFSET);
   };
 
   return (
@@ -180,6 +172,8 @@ const AddIdea = () => {
             color={theme.colors.neutral.baseGrey}
             onPress={() => {
               rbsheet.current.close();
+              widt.value = 1;
+              borderRad.value = 1;
             }}
           />
         </View>
@@ -190,8 +184,9 @@ const AddIdea = () => {
             return (
               <Animated.View
                 style={{
-                  position: 'absolute',
-                  left: marginLef.value * index,
+                  width: 40,
+                  height: 40,
+                  borderRadius: 100,
                   ...styles.colorCont(backgroundColor, item),
                 }}>
                 <TouchableOpacity
@@ -209,13 +204,23 @@ const AddIdea = () => {
           iconName="clock"
           iconType={'feather'}
           title={'Set Reminder'}
-          value={'Not set'}
+          value={reminder ? moment(date).format('MMM Do YY   LT') : 'Not set'}
+          onPress={() => {
+            setOpen(true);
+            setReminder(true);
+          }}
         />
         <Section
           iconName="tag"
           iconType={'feather'}
           title={'Give Label'}
           value={'Not set'}
+        />
+        <Section
+          iconName="check"
+          iconType={'feather'}
+          title={'Mark as Complete'}
+          value={''}
         />
         <View style={styles.line} />
 
@@ -225,6 +230,18 @@ const AddIdea = () => {
           title={'Delete Notes'}
           value={''}
           color={theme.colors.error.base}
+        />
+        <DatePicker
+          modal
+          open={open}
+          date={date}
+          onConfirm={date => {
+            setOpen(false);
+            setDate(date);
+          }}
+          onCancel={() => {
+            setOpen(false);
+          }}
         />
       </RBSheet>
 
@@ -238,8 +255,8 @@ const AddIdea = () => {
             style={styles.extraButton}
             onPress={() => {
               rbsheet.current.open();
-              borderB.value = withSpring(100);
-              marginLef.value = withSpring(45);
+              widt.value = widt.value + 39;
+              borderRad.value = 50;
             }}>
             <Icon
               name="dots-three-horizontal"
@@ -318,11 +335,7 @@ const styles = StyleSheet.create({
   },
   colorCont: (color, item) => {
     return {
-      width: 40,
-      height: 40,
-      borderRadius: 50,
       marginLeft: 10,
-      marginTop: 10,
       borderWidth: color === item ? 2 : 0,
       alignItems: 'center',
       justifyContent: 'center',

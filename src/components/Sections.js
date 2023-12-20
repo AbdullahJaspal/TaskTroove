@@ -3,7 +3,14 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import {theme} from '../theme/theme';
 
-const Section = ({iconName, iconType, title, value, color = 'black'}) => {
+const Section = ({
+  iconName,
+  iconType,
+  title,
+  value,
+  color = 'black',
+  onPress,
+}) => {
   return (
     <View
       style={{
@@ -31,6 +38,7 @@ const Section = ({iconName, iconType, title, value, color = 'black'}) => {
         </Text>
       </View>
       <Text
+        onPress={onPress}
         style={{
           fontFamily: theme.fontFamily.regular,
           marginLeft: 10,
