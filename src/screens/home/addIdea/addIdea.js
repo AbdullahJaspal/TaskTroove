@@ -8,6 +8,7 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
+  Modal,
 } from 'react-native';
 import Topbar from '../../../components/Topbar';
 import {theme} from '../../../theme/theme';
@@ -79,6 +80,9 @@ const AddIdea = () => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [reminder, setReminder] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [label, setLabel] = useState('');
+  const [labels, setLabels] = useState([]);
 
   console.log(date);
   const richText = useRef();
@@ -93,6 +97,13 @@ const AddIdea = () => {
     } else {
       setShowDescError(true);
       setDescHTML('');
+    }
+  };
+
+  const handleKeyDown = e => {
+    if (e.nativeEvent.key == 'Enter') {
+      labels.push(label);
+      setLabel('');
     }
   };
 
@@ -243,6 +254,36 @@ const AddIdea = () => {
             setOpen(false);
           }}
         />
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={true}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={{fontFamily: theme.fontFamily.semibold}}>
+                Label Name
+              </Text>
+              <TextInput
+                style={styles.labelInput}
+                onKeyPress={handleKeyDown}
+                value={label}
+                onChangeText={setLabel}
+              />
+              <Text style={styles.changeBg}>Press "Enter" to add label</Text>
+              <View>
+                {labels.map(item => {
+                  <View>
+                    <Text>{item}</Text>
+                  </View>;
+                })}
+              </View>
+            </View>
+          </View>
+        </Modal>
       </RBSheet>
 
       <View style={styles.bottomCont}>
@@ -382,6 +423,37 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    width: '95%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  labelInput: {
+    height: 50,
+    width: '100%',
+    borderRadius: 10,
+    borderWidth: 0.5,
+    marginTop: 10,
+    borderColor: theme.colors.neutral.darkGrey,
+    paddingHorizontal: 10,
   },
 });
 
