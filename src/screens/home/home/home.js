@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, Text, View} from 'react-native';
 import {theme} from '../../../theme/theme';
+import {Icon} from '@rneui/base';
 
 const Home = () => {
   return (
@@ -25,6 +26,21 @@ const Home = () => {
           Every big step start with small step. Notes your first idea and start
           your journey!
         </Text>
+      </View>
+
+      <View
+        style={{
+          backgroundColor: theme.colors.primary.base,
+          width: 60,
+          height: 60,
+          borderRadius: 100,
+          position: 'absolute',
+          alignSelf: 'center',
+          bottom: 10,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Icon name="plus" type="ant-design" size={30} color={'white'} />
       </View>
     </View>
   );
